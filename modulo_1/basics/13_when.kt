@@ -15,3 +15,19 @@ fun main() {
 println("Especialidad $especialidad")
   }
 }
+
+fun main () {
+  println("Muestra de laboratorio")
+  println("Escriba codigo")
+  val codigo =readLine()?.toIntOrNull()?:0
+  val muestra =when(codigo){
+      1 -> "Sangre venosa(4h)"
+      2 -> "Orina(2h)"
+      3 -> "Heces(24h)"
+      4 -> "Hisopado nasofaringeo(6h)"
+      5 -> "Biopsia(72h)"
+      else -> "Tipo de muestra no especificada"
+    }
+    println("Tipo muestra $muestra") 
+}
+
