@@ -7,7 +7,7 @@ fun main(){
     
     //Argumentos nombrados
     println(crearUsuario(edad=30, nombre="Day", activo=false))
- 
+
 }
 fun crearUsuario(
 nombre: String,
