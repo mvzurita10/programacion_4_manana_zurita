@@ -1,9 +1,11 @@
 package com.ute.compose.ui.material3
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -22,6 +25,7 @@ import androidx.compose.ui.window.Dialog
 import com.ute.compose.model.Contacto
 import com.ute.compose.model.contactosDeMuestra
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Paso06DialogosScreen() {
     var contactos        by remember { mutableStateOf(contactosDeMuestra) }
@@ -126,10 +130,11 @@ fun Paso06DialogosScreen() {
                 onEliminar   = { contacto -> contactoAEliminar = contacto },
                 modifier     = Modifier.padding(paddingValues)
             )
-            "favoritos" -> PantallaFavoritosContent(
+            "favoritos" -> PantallaFavoritosCoxntent(
                 favoritos = contactos.filter { it.favorito },
                 modifier  = Modifier.padding(paddingValues)
             )
+
             "perfil"    -> PantallaPerfilContent(
                 modifier  = Modifier.padding(paddingValues)
             )
@@ -184,7 +189,22 @@ fun Paso06DialogosScreen() {
     }
 }
 
+@Composable
+fun PantallaFavoritosCoxntent(favoritos: List<Contacto>, modifier: Modifier) {
+    TODO("Not yet implemented")
+}
+
 // ── Contenido de la pestaña Contactos ───────────────────────────────────────
+@Composable
+fun PantallaPerfilContent(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("Pantalla Perfil")
+    }
+}
+
 
 @Composable
 private fun ContenidoContactos(
@@ -223,10 +243,15 @@ private fun ContenidoContactos(
                     selected    = filtro == opcion,
                     onClick     = { onFiltro(opcion) },
                     label       = { Text(opcion) },
-                    leadingIcon = if (filtro == opcion) {{
-                        Icon(Icons.Default.Check, null,
-                            Modifier.size(FilterChipDefaults.IconSize))
-                    }} else null
+                    leadingIcon = if (filtro == opcion) {
+                        {
+                            Icon(
+                                Icons.Default.Check,
+                                null,
+                                Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
+                    } else null
                 )
             }
         }
@@ -283,11 +308,11 @@ private fun TarjetaContactoCompleta(
             modifier          = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            androidx.compose.foundation.layout.Box(
+            Box(
                 modifier = Modifier
                     .size(52.dp)
-                    .androidx.compose.ui.draw.clip(androidx.compose.foundation.shape.CircleShape)
-                    .androidx.compose.foundation.background(MaterialTheme.colorScheme.primaryContainer),
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -421,6 +446,6 @@ private fun DialogNuevoContacto(
 
 @Preview(showBackground = true)
 @Composable
-fun Paso06Preview() {
+fun Paso06_Preview() {
     MaterialTheme { Paso06DialogosScreen() }
 }
