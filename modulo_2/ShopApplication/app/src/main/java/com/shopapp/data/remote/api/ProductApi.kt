@@ -2,8 +2,8 @@
 package com.shopapp.data.remote.api
 
 import com.shopapp.data.remote.dto.*
-import retrofit2.Response
 import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ProductApi {
