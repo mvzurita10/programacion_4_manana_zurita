@@ -128,12 +128,11 @@ fun LoginScreen(
                         enabled   = username.isNotBlank() && password.isNotBlank(),
                     )
 
+                    // DENTRO del Column de formulario, después del Button de login:
                     TextButton(
                         onClick  = onForgotPassword,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                    ) {
-                        Text("¿Olvidaste tu contraseña?")
-                    }
+                    ) { Text("¿Olvidaste tu contraseña?") }
                 }
             }
 
