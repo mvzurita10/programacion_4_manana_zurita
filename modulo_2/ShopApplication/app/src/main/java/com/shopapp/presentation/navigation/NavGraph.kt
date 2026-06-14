@@ -15,6 +15,7 @@ import com.shopapp.presentation.ui.admin.dashboard.DashboardScreen
 import com.shopapp.presentation.ui.admin.orders.OrderAdminDetailScreen
 import com.shopapp.presentation.ui.admin.orders.OrdersAdminScreen
 import com.shopapp.presentation.ui.admin.products.ProductsAdminScreen
+import com.shopapp.presentation.ui.admin.users.SendNotificationScreen
 import com.shopapp.presentation.ui.admin.users.UsersAdminScreen
 import com.shopapp.presentation.ui.auth.ForgotPasswordScreen
 import com.shopapp.presentation.ui.auth.LoginScreen
@@ -208,7 +209,7 @@ fun NavGraph(
 
             // ── PROFILE ────────────────────────────
             composable(Screen.Profile.route) {
-                if (!isAuthenticated) {
+                    if (!isAuthenticated) {
                     LaunchedEffect(Unit) {
                         navController.navigate(Screen.Login.route) {
                             popUpTo(Screen.Home.route)
@@ -222,6 +223,7 @@ fun NavGraph(
                                 popUpTo(0) { inclusive = true }
                             }
                         },
+                        onSendNotification = { navController.navigate(Screen.SendNotification.route) },  
                     )
                 }
             }
@@ -436,7 +438,7 @@ fun NavGraph(
             }
 
 
-                // ── Recuperación de contraseña ───────────────────────────────────────────────
+            // ── Recuperación de contraseña ───────────────────────────────────────────────
 
             composable(Screen.ForgotPassword.route) {
                 ForgotPasswordScreen(
@@ -453,6 +455,19 @@ fun NavGraph(
                             popUpTo(Screen.Login.route) { inclusive = true }
                         }
                     },
+                )
+            }
+
+            // ── Notificaciones de staff ───────────────────────────────────────────────────
+            composable(Screen.SendNotification.route) {
+                if (!isStaff) {
+                    LaunchedEffect(Unit) {
+                        navController.popBackStack()
+                    }
+                    return@composable
+                }
+                SendNotificationScreen(
+                    onBack = { navController.popBackStack() },
                 )
             }
         }
