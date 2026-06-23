@@ -7,16 +7,17 @@ import 'widgets/reloj.dart';
 import 'screens/pantalla_contexto.dart';
 import 'widgets/indicador.dart';
 
+
 // ┌──────────────────────────────────────────────────────────────────┐
-// │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos. │
-// │  1  Paso 1   StatelessWidget mínimo                             │
-// │  2  Paso 1b  Widgets básicos — catálogo                        │
-// │  3  Paso 2   StatelessWidget con parámetros                     │
-// │  4  Paso 3   StatefulWidget / setState / cambio de estatus      │
-// │  5  Paso 3b  Parámetros en StatefulWidget                       │
-// │  6  Paso 4   Ciclo de vida con Timer                            │
+// │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos.  │
+// │  1  Paso 1   StatelessWidget mínimo                              │
+// │  2  Paso 1b  Widgets básicos — catálogo                          │
+// │  3  Paso 2   StatelessWidget con parámetros                      │
+// │  4  Paso 3   StatefulWidget / setState / cambio de estatus       │
+// │  5  Paso 3b  Parámetros en StatefulWidget                        │
+// │  6  Paso 4   Ciclo de vida con Timer                             │
 // │  7  Paso 5   BuildContext                                        │
-// │  8  Paso 6   Composición de widgets                             │
+// │  8  Paso 6   Composición de widgets                              │ 
 // └──────────────────────────────────────────────────────────────────┘
 const int paso = 8;
 
