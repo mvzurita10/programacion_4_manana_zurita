@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_shop_app/presentation/screens/admin/dashboard_screen.dart';
 import 'package:flutter_shop_app/presentation/screens/auth/profile_screen.dart';
 import 'package:flutter_shop_app/presentation/screens/cart/cart_screen.dart';
-import 'package:flutter_shop_app/presentation/screens/catalog/product_detail_screen.dart';
 import 'package:flutter_shop_app/presentation/screens/orders/order_detail_screen.dart';
 import 'package:flutter_shop_app/presentation/screens/orders/orders_screen.dart';
 import 'package:flutter_shop_app/presentation/widgets/admin_shell.dart';
@@ -15,8 +14,10 @@ import '../providers/auth_provider.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/catalog/catalog_screen.dart';
+import '../screens/catalog/productdetailscreen.dart';
 import '../screens/catalog/home_screen.dart';
 import 'public_shell.dart';
+import '../screens/admin/categories_admin_screen.dart';
 
 // ignore: unused_element
 class _PlaceholderScreen extends ConsumerWidget {
@@ -119,11 +120,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '/admin/categories',
+        path:    '/admin/categories',
         builder: (_, state) => AdminShell(
           title:        'Categorías',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Categorías — M8'),
+          child:        const CategoriesAdminScreen(),
         ),
       ),
       GoRoute(

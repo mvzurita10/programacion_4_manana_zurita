@@ -1,10 +1,10 @@
 // lib/presentation/providers/dashboard_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/remote/api/category_remote_datasource.dart';
-import '../../data/remote/api/product_remote_datasource.dart';
-import '../../data/remote/api/order_remote_datasource.dart';
-import '../../data/remote/api/user_remote_datasource.dart';
+import '../../data/remote/api/categoryremotedatasource.dart';
+import '../../data/remote/api/productremotedatasource.dart';
+import '../../data/remote/api/orderremotedatasource.dart';
+import '../../data/remote/api/userremotedatasource.dart';
 import '../../domain/model/product.dart';
 
 class DashboardData {
@@ -75,7 +75,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
     state = const DashboardLoading();
     try {
       // All calls in parallel with Future.wait
-      final results = await Future.wait([
+      final results = await Future.wait<dynamic>([
         _prodDs.getStats(),
         _catDs.getStats(),
         _orderDs.getStats(),
