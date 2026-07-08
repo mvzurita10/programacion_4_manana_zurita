@@ -19,6 +19,9 @@ import '../screens/catalog/home_screen.dart';
 import 'public_shell.dart';
 import '../screens/admin/categories_admin_screen.dart';
 import '../screens/admin/products_admin_screen.dart';
+import '../screens/admin/orders_admin_screen.dart';
+import '../screens/admin/order_admin_detail_screen.dart';
+
 
 // ignore: unused_element
 class _PlaceholderScreen extends ConsumerWidget {
@@ -137,20 +140,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '/admin/orders',
+        path:    '/admin/orders',
         builder: (_, state) => AdminShell(
           title:        'Pedidos',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Pedidos admin — M10'),
+          child:        const OrdersAdminScreen(),
         ),
       ),
       GoRoute(
-        path: '/admin/orders/:id',
+        path:    '/admin/orders/:id',
         builder: (_, state) => AdminShell(
-          title:        'Detalle pedido',
-          currentRoute: '/admin/orders',
-          child:        _AdminPlaceholder(
-              'Pedido #${state.pathParameters['id']} — M10'),
+            title:        'Detalle pedido #${state.pathParameters['id']}',
+            currentRoute: '/admin/orders',
+            child:        OrderAdminDetailScreen(
+              orderId: int.parse(state.pathParameters['id']!),
+          ),
         ),
       ),
       GoRoute(
