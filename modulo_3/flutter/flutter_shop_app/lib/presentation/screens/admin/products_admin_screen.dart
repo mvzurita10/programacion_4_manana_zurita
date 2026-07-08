@@ -11,6 +11,8 @@ import '../../../domain/model/product.dart';
 import '../../providers/products_admin_provider.dart';
 import '../../widgets/product_form.dart';
 import '../../widgets/restock_dialog.dart';
+import '../../providers/image_upload_provider.dart';
+import '../../widgets/product_image.dart';
 
 class ProductsAdminScreen extends ConsumerStatefulWidget {
   const ProductsAdminScreen({super.key});
@@ -21,6 +23,7 @@ class ProductsAdminScreen extends ConsumerStatefulWidget {
 
 class _ProductsAdminScreenState extends ConsumerState<ProductsAdminScreen> {
   List<Category> _categories = [];
+  int? _uploadingProductId;
 
   @override
   void initState() {
@@ -34,6 +37,24 @@ class _ProductsAdminScreenState extends ConsumerState<ProductsAdminScreen> {
   Widget build(BuildContext context) {
     final state    = ref.watch(productsAdminProvider);
     final filtered = state.filtered;
+    final uploadState = ref.watch(imageUploadProvider);
+
+    ref.listen<ImageUploadState>(imageUploadProvider, (_, next) {
+      if (next is ImageUploadSuccess) {
+        setState(() => _uploadingProductId = null);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Imagen del producto actualizada.')),
+        );
+        ref.read(productsAdminProvider.notifier).load();   // recarga lista
+        ref.read(imageUploadProvider.notifier).reset();
+      } else if (next is ImageUploadError) {
+        setState(() => _uploadingProductId = null);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.message), backgroundColor: AppColors.error),
+        );
+        ref.read(imageUploadProvider.notifier).reset();
+      }
+    });
 
     return Column(
       children: [
@@ -156,6 +177,13 @@ class _ProductsAdminScreenState extends ConsumerState<ProductsAdminScreen> {
               separatorBuilder:(_, __) => const SizedBox(height: 10),
               itemBuilder: (_, i) => _ProductAdminCard(
                 product:    filtered[i],
+                isUploadingImage: uploadState is ImageUploadLoading &&
+                                  _uploadingProductId == filtered[i].id,
+                onUploadImage: () {
+                  setState(() => _uploadingProductId = filtered[i].id);
+                  ref.read(imageUploadProvider.notifier)
+                      .pickAndUploadProductImage(filtered[i].id);
+                },
                 onToggle:   () => ref.read(productsAdminProvider.notifier)
                     .toggleActive(filtered[i].id, !filtered[i].isActive),
                 onEdit:     () => showProductForm(
@@ -226,6 +254,8 @@ class _ProductAdminCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onRestock;
   final VoidCallback onDelete;
+  final bool         isUploadingImage;
+  final VoidCallback onUploadImage;
 
   const _ProductAdminCard({
     required this.product,
@@ -233,6 +263,8 @@ class _ProductAdminCard extends StatelessWidget {
     required this.onEdit,
     required this.onRestock,
     required this.onDelete,
+    required this.isUploadingImage,
+    required this.onUploadImage,
   });
 
   Color _stockColor() {
