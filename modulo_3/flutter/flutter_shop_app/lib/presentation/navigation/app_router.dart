@@ -18,6 +18,7 @@ import '../screens/catalog/productdetailscreen.dart';
 import '../screens/catalog/home_screen.dart';
 import 'public_shell.dart';
 import '../screens/admin/categories_admin_screen.dart';
+import '../screens/admin/products_admin_screen.dart';
 
 // ignore: unused_element
 class _PlaceholderScreen extends ConsumerWidget {
@@ -128,11 +129,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '/admin/products',
+        path:    '/admin/products',
         builder: (_, state) => AdminShell(
           title:        'Productos',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Productos — M9'),
+          child:        const ProductsAdminScreen(),
         ),
       ),
       GoRoute(
