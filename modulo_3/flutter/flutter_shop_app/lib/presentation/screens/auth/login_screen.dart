@@ -137,11 +137,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         onPressed: _submit,
                         isLoading: isLoading,
                       ),
+
+                      AuthButton(
+                        label:     'Iniciar sesión',
+                        onPressed: _submit,
+                        isLoading: isLoading,
+                      ),
+                      const SizedBox(height: 8),
+                      TextButton(
+                        onPressed: () => context.push('/forgot-password'),
+                        child: const Text('¿Olvidaste tu contraseña?'),
+                      ),
                     ],
                   ),
                 ),
               ),
-
               const SizedBox(height: 24),
 
               // Link al registro
