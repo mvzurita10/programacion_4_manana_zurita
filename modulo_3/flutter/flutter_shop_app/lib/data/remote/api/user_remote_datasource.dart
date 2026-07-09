@@ -27,6 +27,11 @@ abstract class UserRemoteDatasource {
   Future<User>                 updateUser(int id, Map<String, dynamic> payload);
   Future<void>                 deleteUser(int id);
   Future<bool>                 toggleActive(int id);
+  Future<Map<String, dynamic>> sendNotification({
+    required String subject,
+    required String message,
+    int? userId,
+  });
   Future<Map<String, dynamic>> getStats();
 }
 
@@ -89,6 +94,27 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
   }
 
   @override
+  Future<Map<String, dynamic>> sendNotification({
+    required String subject,
+    required String message,
+    int? userId,
+  }) async {
+    try {
+      final res = await _dio.post(
+        '/emails/send/',
+        data: {
+          'subject': subject,
+          'message': message,
+          if (userId != null) 'user_id': userId,
+        },
+      );
+      return res.data as Map<String, dynamic>;
+    } on DioException catch (e) {
+      throw ApiException.fromDioError(e);
+    }
+  }
+
+  @override
   Future<Map<String, dynamic>> getStats() async {
     try {
       final res = await _dio.get('/users/stats/');
@@ -96,38 +122,6 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
     } on DioException catch (e) {
       throw ApiException.fromDioError(e);
     }
-  }
-}
-
-// En la clase abstracta:
-abstract class UserRemoteDatasource {
-  // ... métodos existentes ...
-  Future<Map<String, dynamic>> sendNotification({
-    required String subject,
-    required String message,
-    int? userId,
-  });
-}
-
-// En la implementación:
-@override
-Future<Map<String, dynamic>> sendNotification({
-  required String subject,
-  required String message,
-  int? userId,
-}) async {
-  try {
-    final res = await _dio.post(
-      '/emails/send/',
-      data: {
-        'subject': subject,
-        'message': message,
-        if (userId != null) 'user_id': userId,
-      },
-    );
-    return res.data as Map<String, dynamic>;
-  } on DioException catch (e) {
-    throw ApiException.fromDioError(e);
   }
 }
 

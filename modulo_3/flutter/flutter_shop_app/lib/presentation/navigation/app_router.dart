@@ -15,6 +15,8 @@ import '../providers/auth_provider.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/profile_screen.dart';
 import '../screens/auth/register_screen.dart';
+import '../screens/auth/forgot_password_screen.dart';
+import '../screens/auth/reset_password_confirm_screen.dart';
 import '../screens/catalog/catalog_screen.dart';
 import '../screens/catalog/home_screen.dart';
 import '../screens/catalog/product_detail_screen.dart';
@@ -28,6 +30,7 @@ import '../screens/admin/orders_admin_screen.dart';
 import '../screens/admin/products_admin_screen.dart';
 import '../screens/admin/users_admin_screen.dart';
 import '../widgets/admin_shell.dart';
+import '../screens/admin/send_notification_screen.dart';
 import 'public_shell.dart';
 
 

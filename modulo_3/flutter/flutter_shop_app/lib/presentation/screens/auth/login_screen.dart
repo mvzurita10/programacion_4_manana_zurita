@@ -8,7 +8,7 @@ import '../../../core/utils/validators.dart';
 import '../../../domain/model/auth_state.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/auth_button.dart';
-import '../../widgets/authtextfield.dart';
+import '../../widgets/auth_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

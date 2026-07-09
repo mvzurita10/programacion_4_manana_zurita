@@ -26,7 +26,83 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
   AuthRemoteDatasourceImpl(this._dio, this._storage);
 
-  // ... login, register, logout sin cambios ...
+  @override
+  Future<LoggedUser> login(String username, String password) async {
+    try {
+      final res = await _dio.post(
+        '/auth/login/',
+        data: {
+          'username': username,
+          'password': password,
+        },
+      );
+
+      final data = res.data as Map<String, dynamic>;
+      final access = data['access'] as String;
+      final refresh = data['refresh'] as String;
+
+      final user = LoggedUser.fromMap(data);
+      await _storage.saveTokens(access, refresh);
+      await _storage.saveUser(
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isStaff: user.isStaff,
+      );
+
+      return user;
+    } on DioException catch (e) {
+      throw ApiException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<LoggedUser> register(
+    String username,
+    String email,
+    String password,
+    String password2,
+  ) async {
+    try {
+      final res = await _dio.post(
+        '/auth/register/',
+        data: {
+          'username': username,
+          'email': email,
+          'password': password,
+          'password2': password2,
+        },
+      );
+
+      final data = res.data as Map<String, dynamic>;
+      final access = data['access'] as String;
+      final refresh = data['refresh'] as String;
+
+      final user = LoggedUser.fromMap(data);
+      await _storage.saveTokens(access, refresh);
+      await _storage.saveUser(
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        isStaff: user.isStaff,
+      );
+
+      return user;
+    } on DioException catch (e) {
+      throw ApiException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await _dio.post('/auth/logout/');
+    } on DioException catch (_) {
+      // Si el backend rechaza logout por token vencido, limpiamos sesión local igual.
+    } finally {
+      await _storage.clearSession();
+    }
+  }
 
   @override
   Future<void> requestPasswordReset(String email) async {
