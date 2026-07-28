@@ -1,31 +1,22 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'screens/pantalla_tema.dart';
-import 'screens/pantalla_appbar.dart';
-import 'widgets/catalogo_botones.dart';
-import 'screens/pantalla_navegacion.dart';
-import 'screens/pantalla_dialogs.dart';
+import 'screens/pantalla_tema_mp.dart';
+import 'screens/pantalla_appbar_mp.dart';
+import 'widgets/catalogo_botones_mp.dart';
+import 'screens/pantalla_navegacion_mp.dart';
+import 'screens/pantalla_dialogs_mp.dart';
 
-// ┌──────────────────────────────────────────────────────────────────┐
-// │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos. │
-// │  1  Paso 1  ThemeData + Scaffold básico                         │
-// │  2  Paso 2  Modo oscuro — ThemeMode dinámico                    │
-// │  3  Paso 3  AppBar variantes y SliverAppBar                     │
-// │  4  Paso 4  Botones Material 3                                  │
-// │  5  Paso 5  NavigationBar con 4 pestañas                        │
-// │  6  Paso 6  SnackBar y AlertDialog                              │
-// └──────────────────────────────────────────────────────────────────┘
 const int paso = 6;
 
-void main() => runApp(const AppMonitoreo());
+void main() => runApp(const AppBienestar());
 
-class AppMonitoreo extends StatefulWidget {
-  const AppMonitoreo({super.key});
+class AppBienestar extends StatefulWidget {
+  const AppBienestar({super.key});
   @override
-  State<AppMonitoreo> createState() => _AppMonitoreoState();
+  State<AppBienestar> createState() => _AppBienestarState();
 }
 
-class _AppMonitoreoState extends State<AppMonitoreo> {
+class _AppBienestarState extends State<AppBienestar> {
   ThemeMode _themeMode = ThemeMode.system;
 
   @override
@@ -47,14 +38,14 @@ class _AppMonitoreoState extends State<AppMonitoreo> {
       ),
       home: switch (paso) {
         1 => const _Paso1(),
-        2 => PantallaTema(
+        2 => PantallaTemaMp(
        themeMode: _themeMode,
        onToggle:  (mode) => setState(() => _themeMode = mode),
      ),
-        3 => const PantallaAppBar(),
-        4 => const CatalogoBotones(),
-        5 => const PantallaNavegacion(),
-        6 => const PantallaDialogs(),
+        3 => const PantallaAppBarMp(),
+        4 => const CatalogoBotonesMp(),
+        5 => const PantallaNavegacionMp(),
+        6 => const PantallaDialogsMp(),
         _ => Scaffold(
             body: Center(child: Text('Paso $paso: crea el widget primero'))),
       },
@@ -73,34 +64,34 @@ class _Paso1 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:           const Text('Sistema de Monitoreo'),
+        title:           const Text('Bienestar Mental'),
         backgroundColor: cs.tertiaryContainer,
         foregroundColor: cs.onPrimaryContainer,
         centerTitle: true,
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.favorite_outline), onPressed: () {}),
         ],
       ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.cloud, size: 96, color: cs.primary),
+            Icon(Icons.self_improvement, size: 96, color: cs.primary),
             const SizedBox(height: 16),
             Text(
-              'Servidor web-01',
+              'Toma un Respiro',
               style: text.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
-              '10.0.2.10 · Ubuntu 24.04',
+              'Estás en un lugar seguro',
               style: text.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
             ),
             const SizedBox(height: 24),
             FilledButton.icon(
               onPressed: () {},
-              icon:  const Icon(Icons.terminal),
-              label: const Text('Conectar SSH'),
+              icon:  const Icon(Icons.play_arrow),
+              label: const Text('Iniciar Relajación'),
             ),
           ],
         ),

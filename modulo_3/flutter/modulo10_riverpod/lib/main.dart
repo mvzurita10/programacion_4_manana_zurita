@@ -1,51 +1,34 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'screens/pantalla_servidores.dart';
-import 'screens/pantalla_busqueda.dart';
-import 'screens/pantalla_metricas.dart';
-import 'screens/pantalla_dashboard.dart';
+import 'screens/pantalla_metricas_mp.dart';
+import 'screens/pantalla_dashboard_mp.dart';
 
-// Importa las pantallas a medida que las crees en cada paso:
-// import 'screens/pantalla_servidores.dart';
-// import 'screens/pantalla_busqueda.dart';
-// import 'screens/pantalla_metricas.dart';
-// import 'screens/pantalla_dashboard.dart';
-
-// ┌──────────────────────────────────────────────────────────────────┐
-// │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos.  │
-// │  1  Paso 1  ProviderScope + StateProvider básico (contador)      │
-// │  2  Paso 2  NotifierProvider + lista de servidores               │
-// │  3  Paso 3  Provider derivado + búsqueda filtrada                │ 
-// │  4  Paso 4  AsyncNotifierProvider + métricas loading/error       │
-// │  5  Paso 5  NavigationBar con dos tabs usando Riverpod           │
-// └──────────────────────────────────────────────────────────────────┘
 const int paso = 5;
 
-// StateProvider — estado simple del Paso 1
 final contadorProvider = StateProvider<int>((ref) => 1);
 
 void main() {
-  runApp(const ProviderScope(child: AppMonitoreo()));
+  runApp(const ProviderScope(child: AppBienestar()));
 }
 
-class AppMonitoreo extends StatelessWidget {
-  const AppMonitoreo({super.key});
+class AppBienestar extends StatelessWidget {
+  const AppBienestar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0D47A1)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
       home: switch (paso) {
         1 => const _Paso1(),
-        2 => const PantallaServidores(),
-        3 => const PantallaBusqueda(),
-        4 => const PantallaMetricas(),
-        5 => const PantallaDashboard(),
+        // Pantallas simuladas de los pasos intermedios, para mantener la lógica original pero adaptada
+        2 => const Scaffold(body: Center(child: Text('Diario con NotifierProvider'))),
+        3 => const Scaffold(body: Center(child: Text('Búsqueda Filtrada'))),
+        4 => const PantallaMetricasMp(),
+        5 => const PantallaDashboardMp(),
         _ => Scaffold(
             body: Center(child: Text('Paso $paso: crea el widget primero'))),
       },
@@ -53,22 +36,26 @@ class AppMonitoreo extends StatelessWidget {
   }
 }
 
-// ─── Paso 1 — vive en main.dart ─────────────────────────────────────────
 class _Paso1 extends ConsumerWidget {
   const _Paso1();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final count = ref.watch(contadorProvider);
+    final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Servidores conectados')),
+      appBar: AppBar(
+        title: const Text('Respiraciones Guiadas'),
+        backgroundColor: cs.primaryContainer,
+        foregroundColor: cs.onPrimaryContainer,
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('$count', style: Theme.of(context).textTheme.displayLarge),
-            const Text('servidores activos'),
+            Text('$count', style: Theme.of(context).textTheme.displayLarge?.copyWith(color: cs.primary)),
+            const Text('ciclos completados', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),

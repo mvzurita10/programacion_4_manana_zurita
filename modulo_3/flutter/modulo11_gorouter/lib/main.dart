@@ -1,53 +1,33 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'router/app_router.dart';
-import 'router/app_router_paso2.dart';
-import 'router/app_router_paso3.dart';
-import 'router/app_router_paso4.dart';
-import 'router/app_router_paso5.dart';
-import 'providers/auth_provider.dart';
-
-// ┌──────────────────────────────────────────────────────────────────┐
-// │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos.  │
-// │  1  Paso 1  Rutas básicas + context.go / push / pop              │
-// │  2  Paso 2  pathParameters + pantalla de detalle                 │
-// │  3  Paso 3  queryParameters + extras + ShellRoute                │
-// │  4  Paso 4  ShellRoute completo + NavigationBar persistente      │
-// │  5  Paso 5  Guard redirect + pantalla de login + Riverpod        │
-// └──────────────────────────────────────────────────────────────────┘
-const int paso = 5;
+import 'router/app_router_mp.dart';
+import 'providers/auth_provider_mp.dart';
 
 void main() {
   runApp(
-    ProviderScope(
-      child: AppMonitoreo(paso: paso),
+    const ProviderScope(
+      child: AppBienestar(),
     ),
   );
 }
 
-class AppMonitoreo extends ConsumerWidget {
-  final int paso;
-  const AppMonitoreo({super.key, required this.paso});
+class AppBienestar extends ConsumerWidget {
+  const AppBienestar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(authProvider); // Para que el router se reconstruya al cambiar el estado de autenticación
-    final router = switch (paso) {
-      1 => appRouter,
-      2 => appRouterPaso2,
-      3 => appRouterPaso3,
-      4 => appRouterPaso4,
-      5 => appRouterPaso5(ref),
-      _ => appRouter,
-    };
+    // Escuchar el estado de autenticación
+    ref.watch(authProvider); 
+    
+    // Configurar router con los guards de privacidad
+    final router = appRouterBienestar(ref);
 
     return MaterialApp.router(
-      title:        'Monitor SSH',
+      title:        'Bienestar Mental',
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0D47A1)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'widgets/catalogo_basicos.dart';
-import 'widgets/etiqueta.dart';
-import 'widgets/servicio_estado.dart';
-import 'widgets/contador_limitado.dart';
-import 'widgets/reloj.dart';
-import 'screens/pantalla_contexto.dart';
+import 'widgets/catalogo_basicos_mp.dart';
+import 'widgets/etiqueta_mp.dart';
+import 'widgets/servicio_estado_mp.dart';
+import 'widgets/contador_limitado_mp.dart';
+import 'widgets/reloj_mp.dart';
+import 'screens/pantalla_contexto_mp.dart';
 import 'widgets/indicador.dart';
 
 
@@ -32,25 +32,25 @@ void main() => runApp(MaterialApp(
   ),
   home: switch (paso) {
     1 => const Scaffold(body: Center(child: Saludo())),
-    2 => const CatalogoBasicos(),
+    2 => const CatalogoBasicosMp(),
     3 => const Scaffold(
       body: Center(
         child: Wrap(
           spacing:    12,
           runSpacing: 8,
           children: [
-            Etiqueta(texto: 'Activo',    color: Colors.green),
-            Etiqueta(texto: 'Error',     color: Colors.red,    relleno: true),
-            Etiqueta(texto: 'En espera', color: Colors.orange),
-            Etiqueta(texto: 'Crítico',   color: Colors.red,    fontSize: 16, relleno: true),
-            Etiqueta(texto: 'Info',      color: Colors.blue,   fontSize: 11),
+            EtiquetaMp(texto: 'Calma',    color: Colors.green),
+            EtiquetaMp(texto: 'Crisis',     color: Colors.red,    relleno: true),
+            EtiquetaMp(texto: 'Ansiedad', color: Colors.orange),
+            EtiquetaMp(texto: 'Alerta Alta',   color: Colors.deepOrange,    fontSize: 16, relleno: true),
+            EtiquetaMp(texto: 'Neutro',      color: Colors.blueGrey,   fontSize: 11),
           ],
         ),
       ),
     ),
     4 => const Scaffold(
       body: Center(
-        child: ServicioEstado(nombre: 'nginx-proxy'),
+        child: ServicioEstadoMp(nombre: 'Estado Emocional Actual'),
       ),
     ),
     5 => Scaffold(                               // Paso 3b
@@ -58,16 +58,16 @@ void main() => runApp(MaterialApp(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ContadorLimitado(
-              etiqueta: 'Intentos de login',
+            ContadorLimitadoMp(
+              etiqueta: 'Ejercicios de Respiración',
               limite:   3,
-              color:    Colors.red,
-              onLimite: () => debugPrint('¡Cuenta bloqueada!'),
+              color:    Colors.teal,
+              onLimite: () => debugPrint('¡Meta de respiración alcanzada!'),
             ),
             const SizedBox(height: 40),
-            ContadorLimitado(
-              etiqueta: 'Conexiones activas',
-              limite:   10,
+            ContadorLimitadoMp(
+              etiqueta: 'Reflexiones del Diario',
+              limite:   5,
               color:    Colors.indigo,
             ),
           ],
@@ -75,10 +75,10 @@ void main() => runApp(MaterialApp(
       ),
     ),
     6 => Scaffold(                              // Paso 4
-      appBar: AppBar(title: const Text('Cronómetro')),
-      body: const Center(child: Reloj()),
+      appBar: AppBar(title: const Text('Temporizador de Respiración')),
+      body: const Center(child: RelojMp()),
     ),
-    7 => const PantallaContexto(),    // Paso 5 — ya tiene su propio Scaffold
+    7 => const PantallaContextoMp(),    // Paso 5 — ya tiene su propio Scaffold
     8 => Scaffold(                             // Paso 6
       body: Center(
         child: Wrap(
