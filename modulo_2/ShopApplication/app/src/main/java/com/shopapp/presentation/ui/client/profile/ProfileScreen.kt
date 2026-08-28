@@ -97,6 +97,37 @@ fun ProfileScreen(
                         SuggestionChip(onClick = {}, label = { Text("Staff") })
                     }
 
+                    val profile = state.profile
+
+                    if (profile?.isStaff == true) {
+                        HorizontalDivider()
+
+                        ListItem(
+                            headlineContent   = {
+                                Text("Enviar notificación", fontWeight = FontWeight.Medium)
+                            },
+                            supportingContent = {
+                                Text("Envía un correo a uno o todos los usuarios")
+                            },
+                            leadingContent    = {
+                                Icon(
+                                    imageVector        = Icons.Default.Send,
+                                    contentDescription = null,
+                                    tint               = MaterialTheme.colorScheme.primary,
+                                )
+                            },
+                            trailingContent   = {
+                                Icon(
+                                    imageVector        = Icons.AutoMirrored.Filled.ArrowForward,
+                                    contentDescription = null,
+                                )
+                            },
+                            modifier = Modifier.clickable(onClick = onSendNotification),
+                        )
+
+                        HorizontalDivider()
+                    }
+
                     Spacer(Modifier.height(24.dp))
                     HorizontalDivider()
                     Spacer(Modifier.height(16.dp))
